@@ -1,10 +1,21 @@
 # HyperFrames Student Kit
 
-![Starter composition rendered with HyperFrames](docs/images/starter.jpg)
-
 Nate Herk's reusable video-editing kit for **Codex and Claude Code**.
 Bring your own footage. Cut dead air, review mistakes, plan the story, and build
 motion graphics with HyperFrames and GSAP.
+
+## Short-form examples
+
+Three finished videos created by Nate. Click a preview to open the full video.
+
+| Curiosity reel: unlock your project | Curiosity reel: build a better AI system | AIS Live ad |
+| --- | --- | --- |
+| [![Curiosity reel with paper motion graphics](docs/images/curiosity-reel-2.jpg)](examples/showcase/curiosity-reel-2.mp4) | [![Curiosity reel about building an AI system](docs/images/curiosity-reel-1.jpg)](examples/showcase/curiosity-reel-1.mp4) | [![AIS Live vertical advertisement](docs/images/ais-live-ad.jpg)](examples/showcase/ais-live-ad.mp4) |
+| 32 seconds · 9:16 | 46 seconds · 9:16 | 50 seconds · 9:16 |
+
+[Download the original MP4s](examples/showcase/README.md).
+
+## What's included
 
 - **14 skills**, mirrored for both assistants, with their helper scripts and references.
 - **406 draft motion-graphics cards** across two styles, with manifests, CSS tokens, and editable slots.
@@ -106,7 +117,8 @@ The cards are reusable **draft assets**. Test the cards you choose with your tex
 and footage. Library templates may load GSAP and Google Fonts from their public
 CDNs; localize these dependencies when assembling a final project.
 
-No new private recordings, transcripts, credentials, or private workspace settings
-were imported. Previously public examples remain in the repository. New folders
+The three showcase videos were explicitly supplied for public sharing. No other
+private recordings, transcripts, credentials, or private workspace settings were
+imported. Previously public examples remain in the repository. New folders
 under `video-projects/` and `raw-media/` are ignored automatically; files already
 tracked by Git remain tracked. Create a new project for your own footage.

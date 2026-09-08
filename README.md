@@ -6,14 +6,19 @@ motion graphics with HyperFrames and GSAP.
 
 ## Short-form examples
 
-Three finished videos created by Nate. Click a preview to open the full video.
+Three finished videos created by Nate. Press Play to watch here in the README.
 
-| Curiosity reel: unlock your project | Curiosity reel: build a better AI system | AIS Live ad |
-| --- | --- | --- |
-| [![Curiosity reel with paper motion graphics](docs/images/curiosity-reel-2.jpg)](examples/showcase/curiosity-reel-2.mp4) | [![Curiosity reel about building an AI system](docs/images/curiosity-reel-1.jpg)](examples/showcase/curiosity-reel-1.mp4) | [![AIS Live vertical advertisement](docs/images/ais-live-ad.jpg)](examples/showcase/ais-live-ad.mp4) |
-| 32 seconds · 9:16 | 46 seconds · 9:16 | 50 seconds · 9:16 |
+### Curiosity reel: unlock your project
 
-[Download the original MP4s](examples/showcase/README.md).
+https://github.com/user-attachments/assets/920cc3b7-6ef0-4324-aa98-870c1c2a07c5
+
+### Curiosity reel: build a better AI system
+
+https://github.com/user-attachments/assets/ba468302-fe07-4e4c-949b-68951dd84625
+
+### AIS Live ad
+
+https://github.com/user-attachments/assets/4ad48761-d14c-407a-9dec-1b76a9afb04a
 
 ## What's included
 

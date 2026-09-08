@@ -57,10 +57,13 @@ new personal footage. Never print secrets or copy private media into library exa
 
 ## Editing and timing
 
-Use ElevenLabs Scribe for transcription via `scripts/transcribe-elevenlabs.mjs`;
-reuse existing word timestamps whenever possible. Audio is uploaded to ElevenLabs
-and consumes the user's credits. Use their own locally configured credentials.
-The synthetic demo requires no API key. Avoid implicit Whisper transcription.
+Before choosing a transcription, asset-generation, or voiceover service, read
+`docs/TOOLS-AND-API-KEYS.md` and check the user's provider choice and local setup.
+ElevenLabs Scribe is Nate's default; honor requests for OpenAI Whisper, local
+Whisper, or another provider. Normalize verified word timestamps for the cutting
+tools. The included transcription script is ElevenLabs-only. Kie.ai is optional
+and needs a configured integration and credits. Reuse existing transcripts and
+assets; make any unapproved uploads or paid calls concrete before asking.
 
 Cut silences first; use its edited video AND retimed transcript for cut-mistakes.
 Review each mistake in context. Intentional repetition is not a mistake. Record

@@ -1,5 +1,8 @@
 # Setup and troubleshooting
 
+Start with [tools, accounts, and API keys](TOOLS-AND-API-KEYS.md) for Nate's
+ElevenLabs and Kie.ai choices, Whisper alternatives, and optional services.
+
 Use Node 22+ (required by the pinned HyperFrames CLI), FFmpeg with ffprobe, and
 Chrome/Chromium. Run `npm ci` in the repository root before any project commands.
 `npm run setup` checks tool availability; `npx hyperframes doctor` diagnoses the

@@ -31,6 +31,17 @@ https://github.com/user-attachments/assets/4ad48761-d14c-407a-9dec-1b76a9afb04a
 - **12 existing teaching projects** preserved from the original student kit.
 - A synthetic starter composition and editing fixture that need no footage or API key.
 
+## Tools and optional services
+
+**Nate uses ElevenLabs Scribe to transcribe and Kie.ai to generate videos and
+image assets.** Bring your own API keys and credits when using those services.
+You can ask the assistant to use OpenAI Whisper or local Whisper instead, or
+supply an existing word-level transcript. Generated assets are optional.
+
+The local starter needs no paid transcription or generation API. See the
+[tools, accounts, and API-key guide](docs/TOOLS-AND-API-KEYS.md) for required tools,
+optional services, setup details, and prompts you can copy.
+
 ## Install
 
 Install Node.js **22 or newer**, Git, FFmpeg (including ffprobe), and Chrome or
@@ -45,10 +56,10 @@ npm run setup
 npm test
 ```
 
-Setup checks the tools and creates `.env` only if it is absent. For your own
-recordings, add an ElevenLabs API key with `speech_to_text` access to that local
-file. Transcription uploads audio and uses your ElevenLabs credits. Everything
-else in the starter runs locally. [Setup and troubleshooting](docs/SETUP.md).
+Setup checks the tools and creates `.env` only if it is absent. Add only the keys
+for services you choose. The included transcription helper uses ElevenLabs;
+Whisper and Kie.ai integrations need the setup described in the
+[tools guide](docs/TOOLS-AND-API-KEYS.md). [Setup and troubleshooting](docs/SETUP.md).
 
 ## Render your first example
 

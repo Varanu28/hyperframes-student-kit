@@ -9,7 +9,10 @@ at `video-projects/my-video/assets/raw.mp4`. Preserve this original.
 node scripts/transcribe-elevenlabs.mjs video-projects/my-video/assets/raw.mp4
 ```
 
-This uploads audio to ElevenLabs. You can instead supply an existing word-level
+This is Nate's default and uploads audio to ElevenLabs using your key and credits.
+You may choose OpenAI Whisper, local Whisper, or another provider instead; see
+[provider setup and transcript normalization](TOOLS-AND-API-KEYS.md).
+You can also supply an existing word-level
 JSON transcript with `words: [{text, start, end}]` and `audio_duration_secs`.
 
 ## 2. Remove dead air

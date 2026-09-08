@@ -27,7 +27,9 @@ this test. Treat the answer as editorial judgment until audience data exists.
    over aesthetic defaults. Keep all artifacts in `video-projects/<slug>/`.
 2. Probe the supplied source and reference: duration, dimensions, frame rate,
    audio, and existing transcript identity. Preserve originals. Transcribe with
-   ElevenLabs Scribe using the workspace script. Never substitute an older take.
+   the student's chosen provider; ElevenLabs Scribe is Nate's default. Read
+   `docs/TOOLS-AND-API-KEYS.md` for Whisper alternatives, word-timestamp
+   normalization, credentials, and service costs. Never substitute an older take.
 3. When a reference is supplied, inspect the entire reel using contact sheets,
    individual full-size frames, and contiguous frame strips at representative
    transitions. Review its sound when an audio-capable review surface is available.
@@ -232,7 +234,9 @@ human reactions where they support the story.
 
 ## Generate and assemble
 
-1. Use Kie text-to-video for simple moving inserts when authorized. Verify the
+1. Kie.ai is Nate's optional provider for generated moving inserts and images.
+   Use the student's chosen provider or supplied assets; check its account, credits,
+   and integration before generating. See `docs/TOOLS-AND-API-KEYS.md`. Verify the
    current official API schema. Save model, prompt, task ID, selected output,
    and generation state; reuse successful jobs rather than resubmitting blindly.
    Download and inspect real video files, including full-size corners throughout

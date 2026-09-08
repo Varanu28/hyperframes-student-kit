@@ -11,10 +11,12 @@ missing, propose a style from `style-library/registry.json` based on the footage
 
 1. Inspect duration, streams, and source resolution with ffprobe. Copy the source
    into the project's assets or reference an explicitly provided local path.
-2. Reuse a matching word transcript. Otherwise use
-   `node scripts/transcribe-elevenlabs.mjs <source>`. Transcription sends audio to
-   ElevenLabs and uses the user's API credits. Existing authorization carries
-   forward; make this concrete before requesting any missing authorization.
+2. Read `docs/TOOLS-AND-API-KEYS.md` before service setup. Reuse a matching word
+   transcript. Otherwise use the student's chosen provider; Nate defaults to
+   `node scripts/transcribe-elevenlabs.mjs <source>`. OpenAI Whisper and local
+   Whisper are supported workflow alternatives after transcript normalization.
+   Check available credentials or local dependencies. Explain uploads and costs
+   before any service call whose authorization is still missing.
 3. Read `../cut-silences/SKILL.md`. Produce an EDL and a retimed transcript, and
    render the silence pass when editing is authorized.
 4. Read `../cut-mistakes/SKILL.md`. Inspect candidates in context and preserve

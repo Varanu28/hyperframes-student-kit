@@ -13,7 +13,7 @@ The starter is landscape; the skill must set the reel's composition dimensions,
 layout, and metadata to 1080x1920 before authoring. Keep all source footage and
 outputs inside the new project.
 
-1. Transcribe with ElevenLabs Scribe, or reuse verified word timestamps.
+1. Transcribe with ElevenLabs Scribe, your chosen alternative, or reuse verified word timestamps.
 2. Review mistakes in context and establish one frame-aligned edit decision list.
 3. Explore three opening directions and choose a truthful promise and payoff.
 4. Plan scenes, exact captions, moving footage, and sound cues against retained words.
@@ -22,10 +22,12 @@ outputs inside the new project.
 6. Validate, preview, render a draft, inspect frames, and listen to the full edit.
 7. Resolve timing, audio, and composition problems before exporting the final video.
 
-Transcription sends audio to ElevenLabs and uses your credits. Generated footage
-is optional, requires your own provider account, and may cost money. Prepare the
-asset proposal and honor the user's existing authorization. No paid service is
-needed to run the bundled synthetic validation example.
+Nate uses ElevenLabs Scribe for transcription and Kie.ai for generated video and
+image assets. Students need their own keys and credits for those services. Whisper
+is a transcription alternative, and existing footage can replace generated assets.
+See [tools, accounts, and API keys](TOOLS-AND-API-KEYS.md) for setup and copyable
+prompts. Honor existing authorization when proposing paid assets. The synthetic
+validation example needs no paid service.
 
 ## Validate from the repository root
 

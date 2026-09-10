@@ -1,0 +1,96 @@
+openapi: 3.1.0
+info:
+  title: HyperFrames Editor Codex Gateway
+  version: 1.0.0
+  description: Secure GPT-to-Codex execution gateway for the HyperFrames editor workspace.
+servers:
+  - url: https://YOUR-EDITOR-GATEWAY.example.com
+security:
+  - bearerAuth: []
+paths:
+  /health:
+    get:
+      operationId: editorHealth
+      security: []
+      summary: Check whether the editor Codex gateway is online
+      responses:
+        '200':
+          description: Gateway health
+  /v1/codex/editor/run:
+    post:
+      operationId: runEditorCodex
+      summary: Send a coding or HyperFrames task from GPT to Codex in the editor workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [prompt]
+              properties:
+                prompt:
+                  type: string
+                  minLength: 1
+                  maxLength: 30000
+                  description: The task Codex should execute. Repository AGENTS.md and relevant skills are loaded by Codex.
+                project:
+                  type: string
+                  pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+                  description: Optional video-projects slug. Omit to run from repository root.
+                readOnly:
+                  type: boolean
+                  default: false
+                  description: Set true for analysis-only work; false allows workspace edits.
+      responses:
+        '202':
+          description: Codex job accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [jobId, status, workspace]
+                properties:
+                  jobId: { type: string }
+                  status: { type: string }
+                  workspace: { type: string, const: editor }
+                  project: { type: [string, 'null'] }
+                  sandbox: { type: string }
+                  requestId: { type: string }
+  /v1/codex/editor/jobs/{jobId}:
+    get:
+      operationId: getEditorCodexJob
+      summary: Get the status and logs of an editor Codex job
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Codex job state
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: { type: string }
+                  workspace: { type: string, const: editor }
+                  project: { type: [string, 'null'] }
+                  status:
+                    type: string
+                    enum: [queued, running, completed, failed, timed_out]
+                  sandbox: { type: string }
+                  createdAt: { type: string }
+                  startedAt: { type: [string, 'null'] }
+                  finishedAt: { type: [string, 'null'] }
+                  exitCode: { type: [integer, 'null'] }
+                  stdout: { type: string }
+                  stderr: { type: string }
+                  requestId: { type: string }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API-Key

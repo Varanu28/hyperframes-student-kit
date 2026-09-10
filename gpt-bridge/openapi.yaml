@@ -1,0 +1,285 @@
+openapi: 3.1.0
+info:
+  title: HyperFrames GPT Bridge
+  version: 1.0.0
+  description: Safe HTTP bridge exposing selected HyperFrames Student Kit capabilities to a GPT action or skill.
+servers:
+  - url: https://YOUR-HOST.example.com
+security:
+  - bearerAuth: []
+paths:
+  /health:
+    get:
+      operationId: health
+      security: []
+      summary: Check bridge health
+      responses:
+        '200':
+          description: Healthy
+  /v1/capabilities:
+    get:
+      operationId: getCapabilities
+      summary: List bridge capabilities and runtime requirements
+      responses:
+        '200': { description: Capabilities }
+  /v1/skills:
+    get:
+      operationId: listHyperframesSkills
+      summary: List the repository's agent skills
+      responses:
+        '200': { description: Skill list }
+  /v1/skills/{name}:
+    get:
+      operationId: getHyperframesSkill
+      summary: Read one skill contract
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Skill contents }
+  /v1/styles:
+    get:
+      operationId: searchStyleCards
+      summary: Search the HyperFrames style-card registry
+      parameters:
+        - in: query
+          name: query
+          schema: { type: string }
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+      responses:
+        '200': { description: Matching cards }
+  /v1/cards/{cardId}:
+    get:
+      operationId: getStyleCard
+      summary: Get one card's metadata and HTML source
+      parameters:
+        - in: path
+          name: cardId
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Card details }
+  /v1/projects:
+    get:
+      operationId: listProjects
+      summary: List video projects
+      responses:
+        '200': { description: Project list }
+    post:
+      operationId: createProject
+      summary: Create a project from the included starter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [project]
+              properties:
+                project:
+                  type: string
+                  pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+      responses:
+        '201': { description: Created }
+  /v1/projects/{project}/file:
+    get:
+      operationId: readProjectFile
+      summary: Read a text file inside a video project
+      parameters:
+        - $ref: '#/components/parameters/Project'
+        - in: query
+          name: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: File contents }
+    put:
+      operationId: writeProjectFile
+      summary: Create or replace an allowed text file inside a video project
+      parameters:
+        - $ref: '#/components/parameters/Project'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [path, content]
+              properties:
+                path: { type: string }
+                content: { type: string }
+      responses:
+        '200': { description: Written }
+  /v1/projects/{project}/assets/from-url:
+    post:
+      operationId: importMediaFromUrl
+      summary: Import media from an administrator-approved HTTPS host
+      parameters:
+        - $ref: '#/components/parameters/Project'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [sourceUrl]
+              properties:
+                sourceUrl: { type: string, format: uri }
+                filename: { type: string }
+      responses:
+        '201': { description: Imported }
+  /v1/projects/{project}/preflight:
+    post:
+      operationId: preflightProject
+      summary: Run the repository preflight checks
+      parameters: [ { $ref: '#/components/parameters/Project' } ]
+      responses:
+        '200': { description: Passed }
+        '422': { description: Validation failed }
+  /v1/projects/{project}/lint:
+    post:
+      operationId: lintProject
+      summary: Run HyperFrames lint in JSON mode
+      parameters: [ { $ref: '#/components/parameters/Project' } ]
+      responses:
+        '200': { description: Passed }
+        '422': { description: Lint failed }
+  /v1/projects/{project}/validate-beats:
+    post:
+      operationId: validateBeatSync
+      summary: Validate transcript-anchored beat timing
+      parameters: [ { $ref: '#/components/parameters/Project' } ]
+      responses:
+        '200': { description: Passed }
+        '422': { description: Validation failed }
+  /v1/projects/{project}/cut-silences:
+    post:
+      operationId: cutSilences
+      summary: Plan or apply transcript-driven silence cuts
+      parameters: [ { $ref: '#/components/parameters/Project' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [transcript]
+              properties:
+                transcript: { type: string }
+                video: { type: string }
+                gap: { type: number, minimum: 0.05, maximum: 10 }
+                headPad: { type: number, minimum: 0, maximum: 5 }
+                tailPad: { type: number, minimum: 0, maximum: 5 }
+                apply: { type: boolean, default: false }
+                output: { type: string }
+      responses:
+        '202': { description: Job started }
+  /v1/projects/{project}/find-mistakes:
+    post:
+      operationId: findMistakeCandidates
+      summary: Find spoken mistake candidates for review
+      parameters: [ { $ref: '#/components/parameters/Project' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [transcript]
+              properties:
+                transcript: { type: string }
+      responses:
+        '202': { description: Job started }
+  /v1/projects/{project}/apply-mistakes:
+    post:
+      operationId: applyApprovedMistakeCuts
+      summary: Apply user-reviewed mistake cuts
+      parameters: [ { $ref: '#/components/parameters/Project' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [transcript, cuts, video]
+              properties:
+                transcript: { type: string }
+                cuts: { type: string }
+                video: { type: string }
+                output: { type: string, default: edited-clean.mp4 }
+                apply: { type: boolean, default: true }
+      responses:
+        '202': { description: Job started }
+  /v1/projects/{project}/transcribe:
+    post:
+      operationId: transcribeProjectMedia
+      summary: Start HyperFrames transcription for project media
+      parameters: [ { $ref: '#/components/parameters/Project' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [media]
+              properties:
+                media: { type: string }
+                model: { type: string }
+                language: { type: string }
+      responses:
+        '202': { description: Job started }
+  /v1/projects/{project}/render:
+    post:
+      operationId: renderProject
+      summary: Start a bounded HyperFrames render job
+      parameters: [ { $ref: '#/components/parameters/Project' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quality: { type: string, enum: [draft, standard, high], default: draft }
+                fps: { type: integer, enum: [24, 30, 60], default: 30 }
+                format: { type: string, enum: [mp4, webm], default: mp4 }
+                output: { type: string }
+                workers: { type: integer, minimum: 1, maximum: 8 }
+                strict: { type: boolean, default: false }
+      responses:
+        '202': { description: Job started }
+  /v1/jobs/{jobId}:
+    get:
+      operationId: getJob
+      summary: Get status and logs for an asynchronous job
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: Job state }
+  /v1/doctor:
+    post:
+      operationId: runDoctor
+      summary: Check the HyperFrames runtime environment
+      responses:
+        '200': { description: Environment healthy }
+        '422': { description: Environment problems found }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  parameters:
+    Project:
+      in: path
+      name: project
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'
